@@ -1,10 +1,19 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { loadReadings, prefetchTomorrow } from "../lib/fetchReadings";
+import { loadReadings } from "../lib/fetchReadings";
 
 function today() {
   const d = new Date();
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${y}-${m}-${day}`;
+}
+
+function daysAhead(n) {
+  const d = new Date();
+  d.setDate(d.getDate() + n);
   const y = d.getFullYear();
   const m = String(d.getMonth() + 1).padStart(2, "0");
   const day = String(d.getDate()).padStart(2, "0");
@@ -17,6 +26,14 @@ function formatDate() {
     month: "long",
     day: "numeric",
   });
+}
+
+function prefetchWeek() {
+  for (let i = 1; i <= 7; i++) {
+    ["en", "ig"].forEach((lang) => {
+      fetch(`/api/${lang === "en" ? "english" : "igbo"}-readings?date=${daysAhead(i)}`).catch(() => {});
+    });
+  }
 }
 
 export default function Page() {
@@ -40,8 +57,7 @@ export default function Page() {
         setEnglishData(en);
         setIgboData(ig);
         if (!en && !ig) setIsOffline(true);
-        if (en) prefetchTomorrow("en");
-        if (ig) prefetchTomorrow("ig");
+        if (en || ig) prefetchWeek();
       } catch (err) {
         console.error("Failed to load readings", err);
       } finally {
