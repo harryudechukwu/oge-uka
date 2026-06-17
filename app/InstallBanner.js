@@ -50,8 +50,8 @@ export default function InstallBanner() {
       <div className="max-w-[640px] mx-auto px-4 flex items-center justify-between gap-3">
         <div className="flex items-center gap-2">
           <img src="/icons/Logo%20Background.svg" alt="" className="h-[38px] w-auto border border-[#ddd]" />
-          <p className="text-[17px] leading-tight font-bold" style={{ fontFamily: "'Open Sans Condensed', sans-serif" }}>
-            Add Oge Uka To Homescreen
+              <p className="text-[17px] leading-tight font-bold" style={{ fontFamily: "'Open Sans Condensed', sans-serif" }}>
+            Add To Homescreen
           </p>
         </div>
         <div className="flex gap-2 shrink-0">
