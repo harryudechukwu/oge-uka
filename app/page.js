@@ -37,16 +37,16 @@ function prefetchWeek() {
 }
 
 export default function Page() {
-  const [activeLanguage, setActiveLanguage] = useState(() => {
-    if (typeof localStorage !== "undefined") {
-      return localStorage.getItem("oge-uka-lang") || "en";
-    }
-    return "en";
-  });
+  const [activeLanguage, setActiveLanguage] = useState("en");
   const [englishData, setEnglishData] = useState(null);
   const [igboData, setIgboData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isOffline, setIsOffline] = useState(false);
+
+  useEffect(() => {
+    const saved = localStorage.getItem("oge-uka-lang");
+    if (saved) setActiveLanguage(saved);
+  }, []);
 
   useEffect(() => {
     const date = today();
