@@ -1,0 +1,12 @@
+node_modules/
+.next/
+.cache/
+out/
+.env
+.env.local
+.env.*.local
+*.tsbuildinfo
+next-env.d.ts
+.DS_Store
+*.pdb
+user.csproj
