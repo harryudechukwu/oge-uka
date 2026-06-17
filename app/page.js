@@ -37,7 +37,12 @@ function prefetchWeek() {
 }
 
 export default function Page() {
-  const [activeLanguage, setActiveLanguage] = useState("en");
+  const [activeLanguage, setActiveLanguage] = useState(() => {
+    if (typeof localStorage !== "undefined") {
+      return localStorage.getItem("oge-uka-lang") || "en";
+    }
+    return "en";
+  });
   const [englishData, setEnglishData] = useState(null);
   const [igboData, setIgboData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -84,7 +89,7 @@ export default function Page() {
         <div className="pointer-events-auto">
           <div className="inline-flex bg-gray-200/80 backdrop-blur-sm rounded-full p-1 gap-px">
             <button
-              onClick={() => setActiveLanguage("en")}
+              onClick={() => { setActiveLanguage("en"); localStorage.setItem("oge-uka-lang", "en"); }}
               className={`w-24 py-2.5 rounded-full text-base font-semibold text-center transition-all duration-300 ${
                 activeLanguage === "en"
                   ? "bg-white text-gray-900 shadow-sm"
@@ -94,7 +99,7 @@ export default function Page() {
               English
             </button>
             <button
-              onClick={() => setActiveLanguage("ig")}
+              onClick={() => { setActiveLanguage("ig"); localStorage.setItem("oge-uka-lang", "ig"); }}
               className={`w-24 py-2.5 rounded-full text-base font-semibold text-center transition-all duration-300 ${
                 activeLanguage === "ig"
                   ? "bg-white text-gray-900 shadow-sm"
