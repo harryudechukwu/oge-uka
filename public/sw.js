@@ -1,5 +1,5 @@
-const STATIC_CACHE = "oge-uka-static-v7";
-const READINGS_CACHE = "oge-uka-readings-v7";
+const STATIC_CACHE = "oge-uka-static-v8";
+const READINGS_CACHE = "oge-uka-readings-v8";
 
 const STATIC_URLS = [
   "/",

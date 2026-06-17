@@ -53,31 +53,20 @@ export default function Page() {
     let cancelled = false;
 
     (async () => {
-      try {
-        const [en, ig] = await Promise.all([
-          loadReadings(date, "en"),
-          loadReadings(date, "ig"),
-        ]);
-        if (cancelled) return;
-        setEnglishData(en);
-        setIgboData(ig);
-        if (!en && !ig) setIsOffline(true);
-        if (en || ig) prefetchWeek();
-      } catch (err) {
-        console.error("Failed to load readings", err);
-      } finally {
-        if (!cancelled) setIsLoading(false);
-      }
+      const [en, ig] = await Promise.all([
+        loadReadings(date, "en"),
+        loadReadings(date, "ig"),
+        new Promise((r) => setTimeout(r, 3000)),
+      ]);
+      if (cancelled) return;
+      setEnglishData(en);
+      setIgboData(ig);
+      if (!en && !ig) setIsOffline(true);
+      if (en || ig) prefetchWeek();
+      if (!cancelled) setIsLoading(false);
     })();
 
-    const timeout = setTimeout(() => {
-      if (!cancelled) setIsLoading(false);
-    }, 10000);
-
-    return () => {
-      cancelled = true;
-      clearTimeout(timeout);
-    };
+    return () => { cancelled = true; };
   }, []);
 
   const activeData = activeLanguage === "en" ? englishData : igboData;
@@ -85,7 +74,7 @@ export default function Page() {
   return (
     <div className="min-h-screen flex flex-col bg-white text-[#111]">
       <div className="fixed bottom-0 left-0 right-0 h-[200px] bg-gradient-to-t from-white to-white/0 pointer-events-none z-40" style={{ backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)", maskImage: "linear-gradient(to top, black 40%, transparent)", WebkitMaskImage: "linear-gradient(to top, black 40%, transparent)" }} />
-      <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 pointer-events-none">
+      <div className={`fixed bottom-6 left-1/2 -translate-x-1/2 z-50 pointer-events-none transition-opacity duration-300 ${isLoading ? "opacity-0" : "opacity-100"}`}>
         <div className="pointer-events-auto">
           <div className="inline-flex bg-gray-200/80 backdrop-blur-sm rounded-full p-1 gap-px">
             <button
@@ -119,8 +108,9 @@ export default function Page() {
       )}
 
       {isLoading ? (
-        <div className="flex-1 flex items-center justify-center">
-          <p className="text-[14px] text-[#999]">Loading...</p>
+        <div className="fixed inset-0 flex flex-col items-center justify-center bg-white gap-5">
+          <div className="w-6 h-6 border-2 border-[#ddd] border-t-[#111] rounded-full animate-spin" />
+          <p className="text-[20px] font-medium text-[#888]" style={{ fontFamily: "'Open Sans Condensed', sans-serif" }}>Getting today&apos;s reading</p>
         </div>
       ) : !activeData ? (
         <div className="flex-1 flex items-center justify-center px-4">
