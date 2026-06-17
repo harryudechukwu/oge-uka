@@ -6,7 +6,7 @@
   "display": "standalone",
   "orientation": "portrait",
   "theme_color": "#1a1a2e",
-  "background_color": "#1a1a2e",
+  "background_color": "#F2F2F2",
   "categories": ["lifestyle", "religion"],
   "icons": [
     { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
