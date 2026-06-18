@@ -157,6 +157,11 @@ export default function Page() {
               </section>
             </div>
           ))}
+          <footer className="text-center pt-2 pb-6 text-[17px]" style={{ fontFamily: "'Open Sans Condensed', sans-serif" }}>
+            <span className="text-[#999]">Built by </span>
+            <a href="https://harryude.netlify.app/" target="_blank" rel="noopener noreferrer" className="text-[#111] underline underline-offset-2">HarryUde</a>
+            <span className="text-[#999]"> for the Church of God</span>
+          </footer>
         </main>
       )}
     </div>
