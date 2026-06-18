@@ -76,12 +76,12 @@ export default function Page() {
       <div className="fixed bottom-0 left-0 right-0 h-[200px] bg-gradient-to-t from-white to-white/0 pointer-events-none z-40" style={{ backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)", maskImage: "linear-gradient(to top, black 40%, transparent)", WebkitMaskImage: "linear-gradient(to top, black 40%, transparent)" }} />
       <div className={`fixed bottom-6 left-1/2 -translate-x-1/2 z-50 pointer-events-none transition-opacity duration-300 ${isLoading ? "opacity-0" : "opacity-100"}`}>
         <div className="pointer-events-auto">
-          <div className="inline-flex bg-gray-200/80 backdrop-blur-sm rounded-full p-1 gap-px">
+          <div className="inline-flex bg-gray-100 backdrop-blur-sm rounded-full p-1 gap-px border border-gray-200">
             <button
               onClick={() => { setActiveLanguage("en"); localStorage.setItem("oge-uka-lang", "en"); }}
               className={`w-24 py-2.5 rounded-full text-base font-semibold text-center transition-all duration-300 ${
                 activeLanguage === "en"
-                  ? "bg-white text-gray-900 shadow-sm"
+                  ? "bg-white text-gray-900 border border-[#ddd]"
                   : "text-gray-500 hover:text-gray-700"
               }`}
             >
@@ -91,7 +91,7 @@ export default function Page() {
               onClick={() => { setActiveLanguage("ig"); localStorage.setItem("oge-uka-lang", "ig"); }}
               className={`w-24 py-2.5 rounded-full text-base font-semibold text-center transition-all duration-300 ${
                 activeLanguage === "ig"
-                  ? "bg-white text-gray-900 shadow-sm"
+                  ? "bg-white text-gray-900 border border-[#ddd]"
                   : "text-gray-500 hover:text-gray-700"
               }`}
             >
