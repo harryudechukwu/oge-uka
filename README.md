@@ -6,4 +6,6 @@ Read today's Mass readings: First Reading, Responsorial Psalm, Alleluia, and Gos
 
 [Live site](https://ogeuka.netlify.app/)
 
-Built with Next.js, Tailwind CSS, and served via Netlify.
+Built with Next.js and Tailwind CSS, served via Netlify.
+
+Mass readings sourced from [catholiclectionary.com](https://www.catholiclectionary.com/).
