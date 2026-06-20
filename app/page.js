@@ -31,7 +31,19 @@ function formatDate() {
 function prefetchWeek() {
   for (let i = 1; i <= 7; i++) {
     ["en", "ig"].forEach((lang) => {
-      fetch(`/api/${lang === "en" ? "english" : "igbo"}-readings?date=${daysAhead(i)}`).catch(() => {});
+      const url = `/api/${lang === "en" ? "english" : "igbo"}-readings?date=${daysAhead(i)}`;
+      fetch(url)
+        .then((r) => r.ok && r.json())
+        .then((data) => {
+          if (data) {
+            caches.open("oge-uka-cache").then((c) => {
+              c.put(url, new Response(JSON.stringify(data), {
+                headers: { "Content-Type": "application/json" },
+              }));
+            });
+          }
+        })
+        .catch(() => {});
     });
   }
 }

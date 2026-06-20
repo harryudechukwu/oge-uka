@@ -2,6 +2,7 @@
 // next.config.mjs, lib/*, or any static asset (SVG, PNG, font) changes.
 const STATIC_CACHE = "oge-uka-static-v11";
 const READINGS_CACHE = "oge-uka-readings-v11";
+const PERSISTENT_CACHE = "oge-uka-cache";
 
 const STATIC_URLS = [
   "/",
@@ -30,13 +31,18 @@ function daysAhead(n) {
 
 async function prefetchWeek() {
   const cache = await caches.open(READINGS_CACHE);
+  const persistent = await caches.open(PERSISTENT_CACHE);
   for (let i = 1; i <= 7; i++) {
     const date = daysAhead(i);
     for (const lang of ["english", "igbo"]) {
       try {
         const url = `/api/${lang}-readings?date=${date}`;
         const res = await fetch(url);
-        if (res.ok) await cache.put(new Request(url), res);
+        if (res.ok) {
+          const cloned = res.clone();
+          await cache.put(new Request(url), res);
+          await persistent.put(new Request(url), cloned);
+        }
       } catch {}
     }
   }
@@ -48,7 +54,7 @@ self.addEventListener("activate", (event) => {
       const keys = await caches.keys();
       await Promise.all(
         keys
-          .filter((k) => k !== STATIC_CACHE && k !== READINGS_CACHE)
+          .filter((k) => k !== STATIC_CACHE && k !== READINGS_CACHE && k !== PERSISTENT_CACHE)
           .map((k) => caches.delete(k))
       );
       await prefetchWeek();
@@ -99,6 +105,8 @@ async function networkFirst(request) {
   } catch {
     const cached = await caches.match(request);
     if (cached) return cached;
+    const fallback = await caches.match(request, { cacheName: PERSISTENT_CACHE });
+    if (fallback) return fallback;
     return new Response(
       JSON.stringify({ error: "offline" }),
       { status: 503, headers: { "Content-Type": "application/json" } }
