@@ -25,6 +25,12 @@ export const metadata = {
     locale: "en_US",
     type: "website",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "Oge Uka",
+    description: "Daily Catholic Mass readings in English and Igbo",
+    images: ["/icons/OG%20Image.png"],
+  },
   other: {
     "theme-color": "#1a1a2e",
     "mobile-web-app-capable": "yes",

@@ -1,7 +1,7 @@
 // REMINDER: Bump both version numbers whenever page.js, layout.js, manifest.json,
 // next.config.mjs, lib/*, or any static asset (SVG, PNG, font) changes.
-const STATIC_CACHE = "oge-uka-static-v11";
-const READINGS_CACHE = "oge-uka-readings-v11";
+const STATIC_CACHE = "oge-uka-static-v12";
+const READINGS_CACHE = "oge-uka-readings-v12";
 const PERSISTENT_CACHE = "oge-uka-cache";
 
 const STATIC_URLS = [
